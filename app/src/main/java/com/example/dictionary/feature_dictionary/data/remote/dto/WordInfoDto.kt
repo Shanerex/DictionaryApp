@@ -1,5 +1,6 @@
 package com.example.dictionary.feature_dictionary.data.remote.dto
 
+import com.example.dictionary.feature_dictionary.data.local.entity.WordInfoEntity
 import com.example.dictionary.feature_dictionary.domain.model.WordInfo
 
 data class WordInfoDto(
@@ -15,6 +16,15 @@ data class WordInfoDto(
             origin = origin,
             phonetic = phonetic,
             word = word
+        )
+    }
+
+    fun toWordInfoEntity(): WordInfoEntity {
+        return WordInfoEntity(
+            word = word,
+            phonetic = phonetic,
+            origin = origin,
+            meanings = meanings.map { it.toMeaning() },
         )
     }
 }

@@ -23,6 +23,6 @@ class Converters(
         return jsonParser.toJson(
             meanings,
             object : TypeToken<ArrayList<Meaning>>(){}.type
-        ) ?: "[]"
+        ) ?: "[]"//empty list in json format
     }
 }
