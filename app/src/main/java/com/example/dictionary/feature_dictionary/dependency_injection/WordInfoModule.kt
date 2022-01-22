@@ -2,6 +2,7 @@ package com.example.dictionary.feature_dictionary.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
+import com.example.dictionary.feature_dictionary.data.local.Converters
 import com.example.dictionary.feature_dictionary.data.local.WordInfoDatabase
 import com.example.dictionary.feature_dictionary.data.remote.DictionaryAPI
 import com.example.dictionary.feature_dictionary.data.repository.WordInfoRepositoryImplementation
@@ -47,7 +48,7 @@ object WordInfoModule {
             app,
             WordInfoDatabase::class.java,
             "word_info_db"
-        ).addTypeConverter(GsonParser(Gson()))
+        ).addTypeConverter(Converters(GsonParser(Gson())))
             .build()
     }
 

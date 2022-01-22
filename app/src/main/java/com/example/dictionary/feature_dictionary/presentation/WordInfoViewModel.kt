@@ -39,7 +39,7 @@ class WordInfoViewModel @Inject constructor(
         searchJob?.cancel() // this is done to prevent calling the API/DB after you type a single character
         //make sure that the call to the API or DB is made only after the word is typed fully in the editText
         searchJob = viewModelScope.launch {
-            delay(timeMillis = 500L)// basically the search request is made after 5s on typing each character and since typing each character delays the coroutine by 5s, the search is made only after 5s after typing the whole word
+            delay(500L)// basically the search request is made after 5s on typing each character and since typing each character delays the coroutine by 5s, the search is made only after 5s after typing the whole word
             getWordInfo(query)
                 .onEach { result ->
                     when(result) {
