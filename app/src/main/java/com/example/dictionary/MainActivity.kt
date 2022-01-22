@@ -7,13 +7,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,6 +56,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     scaffoldState = scaffoldState
                 ) {
+                    val focusManager = LocalFocusManager.current
                     Box(
                         modifier = Modifier.background(MaterialTheme.colors.background)
                     ) {
@@ -57,15 +65,31 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .padding(16.dp)
                         ) {
-                            TextField(
+                            OutlinedTextField(
                                 value = viewmodel.searchQuery.value,
                                 onValueChange = viewmodel::onSearch,
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                placeholder = {
-                                    Text(text = "Search for a word..")
+                                leadingIcon = {
+                                              Icon(
+                                                  imageVector = Icons.Default.Search,
+                                                  contentDescription = "Search Icon",
+                                                  modifier = Modifier.padding(12.dp)
+                                              )
                                 },
-                                shape = RoundedCornerShape(4.dp)
+                                label = {
+                                    Text(text = "Type a word...")
+                                },
+                                shape = RoundedCornerShape(10.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Search,
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onSearch = {
+                                        focusManager.clearFocus()
+                                    }
+                                )
                             )
 
                             Spacer(modifier = Modifier.height(16.dp))
